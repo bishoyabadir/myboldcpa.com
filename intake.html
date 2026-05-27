@@ -842,6 +842,11 @@
       </div>
 
       <div class="form-group">
+        <label>Missing or outstanding documents</label>
+        <textarea id="missing_docs" placeholder="List any documents you're still gathering or that may be missing (e.g., W-2 from second job, 1099-B, prior year return)..."></textarea>
+      </div>
+
+      <div class="form-group">
         <label>Additional notes or questions</label>
         <textarea id="notes" placeholder="Share anything else about your situation, goals, or questions you have for us..."></textarea>
       </div>
@@ -879,6 +884,10 @@
         </div>
         <div class="field-error" id="err-consent">You must agree to the authorization before submitting.</div>
       </div>
+    </div>
+
+    <div id="submit-error" style="display:none;margin-top:1rem;padding:0.85rem 1rem;background:#fdf0ee;border:1px solid #e8b4ae;border-radius:var(--radius);font-size:13px;color:#922b21;">
+      There was a problem submitting your form. Please try again or email us directly at <a href="mailto:info@myboldcpa.com" style="color:#922b21;">info@myboldcpa.com</a>.
     </div>
 
     <div class="form-nav">
@@ -1104,6 +1113,7 @@ function buildReview() {
       ${v('appt_time') !== '—' ? `<div class="review-item"><strong>Preferred Time</strong><span>${v('appt_time')}</span></div>` : ''}
       ${v('referral_source') !== '—' ? `<div class="review-item"><strong>How You Found Us</strong><span>${v('referral_source')}</span></div>` : ''}
     </div>
+    ${v('missing_docs') !== '—' ? `<div style="margin-top:0.75rem;"><strong style="font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--mid);">Missing Documents</strong><p style="font-size:14px;margin-top:3px;">${v('missing_docs')}</p></div>` : ''}
     ${v('notes') !== '—' ? `<div style="margin-top:0.75rem;"><strong style="font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--mid);">Notes</strong><p style="font-size:14px;margin-top:3px;">${v('notes')}</p></div>` : ''}
   </div>`;
 
@@ -1111,24 +1121,83 @@ function buildReview() {
 }
 
 // ── Final Submit ─────────────────────────────────────────────────────────────
-function handleSubmit() {
+async function handleSubmit() {
   const consent = document.getElementById('consent');
   if (!consent.checked) {
     document.getElementById('err-consent').classList.add('show');
     return;
   }
   document.getElementById('err-consent').classList.remove('show');
+  document.getElementById('submit-error').style.display = 'none';
 
   const btn = document.querySelector('.btn-submit');
   btn.textContent = 'Submitting...';
   btn.disabled = true;
 
-  setTimeout(() => {
-    document.querySelectorAll('.form-page').forEach(p => p.classList.remove('active'));
-    document.getElementById('success-page').classList.add('active');
-    document.querySelector('.progress-bar-wrap').style.display = 'none';
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, 1400);
+  const val = id => (document.getElementById(id) || {}).value || '';
+  const radioVal = name => { const el = document.querySelector(`input[name="${name}"]:checked`); return el ? el.value : ''; };
+  const checkedVals = selector => Array.from(document.querySelectorAll(selector + ':checked')).map(e => e.value).join(', ');
+
+  const taxYear = clientType === 'individual' ? val('tax_years') : val('biz_tax_years');
+
+  const payload = {
+    clientType,
+    firstName:    val('first_name'),
+    lastName:     val('last_name'),
+    email:        val('email'),
+    phone:        val('phone'),
+    address:      val('address'),
+    city:         val('city'),
+    state:        val('state'),
+    zip:          val('zip'),
+    contactPref:  radioVal('contact_pref'),
+    // Individual fields
+    filingStatus:   radioVal('filing_status'),
+    numDependents:  val('num_dependents'),
+    incomeSources:  checkedVals('#income_sources input[type="checkbox"]'),
+    priorCPA:       radioVal('prior_cpa'),
+    unfiledReturns: radioVal('unfiled'),
+    irsAudit:       radioVal('irs_audit'),
+    // Business fields
+    businessName: val('biz_name'),
+    ein:          val('ein'),
+    entityType:   val('entity_type'),
+    industry:     val('industry'),
+    revenue:      val('revenue'),
+    numEmployees: val('num_employees'),
+    acctSoftware: radioVal('acct_software'),
+    // Shared
+    taxYear,
+    servicesRequested: checkedVals('#services_requested input[type="checkbox"]'),
+    urgency:      radioVal('urgency'),
+    apptDate:     val('appt_date'),
+    apptTime:     val('appt_time'),
+    referralSource: val('referral_source'),
+    missingDocs:  val('missing_docs'),
+    notes:        val('notes'),
+  };
+
+  try {
+    const res = await fetch('https://formspree.io/f/maqkllzo', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+
+    if (res.ok) {
+      document.querySelectorAll('.form-page').forEach(p => p.classList.remove('active'));
+      document.getElementById('success-page').classList.add('active');
+      document.querySelector('.progress-bar-wrap').style.display = 'none';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      throw new Error('Response ' + res.status);
+    }
+  } catch {
+    document.getElementById('submit-error').style.display = 'block';
+    btn.textContent = 'Submit Intake Form';
+    btn.disabled = false;
+    window.scrollTo({ top: document.getElementById('submit-error').offsetTop - 20, behavior: 'smooth' });
+  }
 }
 </script>
 </body>
