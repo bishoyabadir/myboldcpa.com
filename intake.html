@@ -1,0 +1,1135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Client Intake Form | BOLD CPA LLC</title>
+<meta name="description" content="Complete our client intake form to get started with BOLD CPA LLC. Secure, confidential, and takes about 5 minutes.">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --blue: #1B5FAA;
+    --blue-dark: #0d3d73;
+    --orange: #E87722;
+    --orange-light: #f5a44a;
+    --dark: #1a1a1a;
+    --mid: #4a4a4a;
+    --light: #f5f5f3;
+    --white: #ffffff;
+    --border: #e0ddd8;
+    --radius: 6px;
+    --red: #c0392b;
+  }
+  body { font-family: 'DM Sans', sans-serif; color: var(--dark); background: var(--light); }
+  h1,h2,h3,h4 { font-family: 'Barlow Condensed', sans-serif; letter-spacing: 0.02em; }
+
+  /* NAV */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--white);
+    border-bottom: 2px solid var(--blue);
+    padding: 0 2rem;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 64px;
+  }
+  .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .check-svg { width: 36px; height: 36px; }
+  .nav-brand { font-family: 'Barlow Condensed', sans-serif; font-size: 24px; font-weight: 800; color: var(--dark); line-height: 1; }
+  .nav-links { display: flex; align-items: center; gap: 1.5rem; }
+  .nav-links a { text-decoration: none; color: var(--mid); font-size: 14px; font-weight: 500; }
+  .nav-links a:hover { color: var(--blue); }
+  .nav-cta {
+    background: var(--orange); color: var(--white) !important;
+    padding: 8px 16px; border-radius: var(--radius); font-weight: 600 !important;
+    transition: background 0.2s;
+  }
+  .nav-cta:hover { background: #c9621a !important; }
+
+  /* PAGE HEADER */
+  .page-header {
+    background: var(--blue);
+    padding: 3.5rem 2rem 3rem;
+    text-align: center;
+    color: var(--white);
+  }
+  .page-header .badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.25);
+    color: rgba(255,255,255,0.9);
+    font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 5px 14px; border-radius: 20px; margin-bottom: 1rem;
+  }
+  .page-header h1 { font-size: clamp(2.2rem, 5vw, 3.5rem); font-weight: 800; line-height: 1.05; margin-bottom: 0.75rem; }
+  .page-header h1 em { color: var(--orange-light); font-style: normal; }
+  .page-header p { font-size: 16px; color: rgba(255,255,255,0.8); max-width: 440px; margin: 0 auto; line-height: 1.6; }
+
+  /* PROGRESS BAR */
+  .progress-bar-wrap {
+    background: var(--white); border-bottom: 1px solid var(--border);
+    padding: 1rem 2rem;
+    display: flex; justify-content: center;
+  }
+  .progress-steps {
+    display: flex; align-items: center; gap: 0;
+    max-width: 600px; width: 100%;
+  }
+  .step-item {
+    display: flex; flex-direction: column; align-items: center;
+    flex: 1;
+    position: relative;
+  }
+  .step-item:not(:last-child)::after {
+    content: '';
+    position: absolute; top: 14px; left: 50%; right: -50%;
+    height: 2px; background: var(--border); z-index: 0;
+  }
+  .step-item.done:not(:last-child)::after,
+  .step-item.active:not(:last-child)::after { background: var(--blue); }
+  .step-dot {
+    width: 28px; height: 28px; border-radius: 50%;
+    border: 2px solid var(--border); background: var(--white);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 700; color: var(--mid);
+    position: relative; z-index: 1; transition: all 0.2s;
+  }
+  .step-item.active .step-dot { border-color: var(--blue); background: var(--blue); color: var(--white); }
+  .step-item.done .step-dot { border-color: var(--blue); background: var(--blue); color: var(--white); }
+  .step-label { font-size: 11px; font-weight: 600; color: var(--mid); margin-top: 5px; text-align: center; white-space: nowrap; }
+  .step-item.active .step-label { color: var(--blue); }
+  @media (max-width: 480px) { .step-label { display: none; } }
+
+  /* MAIN FORM AREA */
+  .form-wrapper { max-width: 760px; margin: 0 auto; padding: 2.5rem 1.5rem 4rem; }
+
+  /* FORM SECTIONS */
+  .form-page { display: none; }
+  .form-page.active { display: block; }
+
+  .form-card {
+    background: var(--white); border: 1px solid var(--border);
+    border-radius: 10px; padding: 2rem; margin-bottom: 1.5rem;
+  }
+  .section-heading {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 1.5rem; padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .section-number {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: var(--blue); color: var(--white);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 700; flex-shrink: 0;
+  }
+  .section-title { font-size: 1.3rem; font-weight: 700; }
+  .section-label-tag {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--orange); display: block; margin-bottom: 0.3rem;
+  }
+
+  /* CLIENT TYPE TOGGLE */
+  .type-toggle {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem;
+  }
+  .type-option {
+    border: 2px solid var(--border); border-radius: 8px;
+    padding: 1.25rem 1rem; cursor: pointer; text-align: center;
+    transition: all 0.2s; position: relative;
+  }
+  .type-option:hover { border-color: var(--blue); }
+  .type-option.selected { border-color: var(--blue); background: rgba(27,95,170,0.04); }
+  .type-option.selected::after {
+    content: '✓';
+    position: absolute; top: 8px; right: 10px;
+    width: 18px; height: 18px; border-radius: 50%;
+    background: var(--blue); color: var(--white);
+    font-size: 11px; display: flex; align-items: center; justify-content: center;
+  }
+  .type-option input[type="radio"] { position: absolute; opacity: 0; pointer-events: none; }
+  .type-icon { font-size: 2rem; margin-bottom: 0.5rem; }
+  .type-option h4 { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.25rem; }
+  .type-option p { font-size: 12px; color: var(--mid); line-height: 1.4; }
+
+  /* FORM FIELDS */
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .form-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; }
+  @media (max-width: 560px) { .form-row, .form-row-3 { grid-template-columns: 1fr; } }
+  .form-group { margin-bottom: 1rem; }
+  .form-group:last-child { margin-bottom: 0; }
+  .form-group label {
+    display: block; font-size: 12px; font-weight: 600;
+    color: var(--mid); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 5px;
+  }
+  .required-star { color: var(--red); }
+  .form-group input, .form-group select, .form-group textarea {
+    width: 100%; border: 1.5px solid var(--border); border-radius: var(--radius);
+    padding: 10px 12px; font-size: 14px; font-family: 'DM Sans', sans-serif;
+    color: var(--dark); background: var(--white); transition: border-color 0.2s;
+  }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+    outline: none; border-color: var(--blue);
+  }
+  .form-group input.error, .form-group select.error, .form-group textarea.error {
+    border-color: var(--red);
+  }
+  .field-error { font-size: 11px; color: var(--red); margin-top: 3px; display: none; }
+  .field-error.show { display: block; }
+  .form-group textarea { resize: vertical; min-height: 90px; }
+  .form-group select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%234a4a4a' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: right 12px center; padding-right: 32px;
+  }
+  .form-hint { font-size: 12px; color: var(--mid); margin-top: 4px; }
+
+  /* CHECKBOX GRID */
+  .checkbox-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 0.6rem; }
+  .checkbox-item {
+    display: flex; align-items: center; gap: 9px;
+    padding: 10px 12px; border: 1.5px solid var(--border);
+    border-radius: var(--radius); cursor: pointer; transition: all 0.15s;
+    font-size: 14px;
+  }
+  .checkbox-item:hover { border-color: var(--blue); }
+  .checkbox-item input[type="checkbox"] { accent-color: var(--blue); width: 15px; height: 15px; flex-shrink: 0; cursor: pointer; }
+  .checkbox-item.checked { border-color: var(--blue); background: rgba(27,95,170,0.04); }
+
+  /* RADIO GROUP */
+  .radio-group { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+  .radio-item {
+    display: flex; align-items: center; gap: 8px;
+    padding: 8px 14px; border: 1.5px solid var(--border);
+    border-radius: 20px; cursor: pointer; font-size: 14px; transition: all 0.15s;
+  }
+  .radio-item:hover { border-color: var(--blue); }
+  .radio-item input[type="radio"] { accent-color: var(--blue); width: 14px; height: 14px; cursor: pointer; }
+  .radio-item.selected { border-color: var(--blue); background: rgba(27,95,170,0.06); font-weight: 500; }
+
+  /* YES/NO */
+  .yes-no { display: flex; gap: 0.6rem; }
+  .yes-no label {
+    display: flex; align-items: center; gap: 7px;
+    padding: 8px 18px; border: 1.5px solid var(--border);
+    border-radius: 20px; cursor: pointer; font-size: 14px;
+    font-weight: 500; transition: all 0.15s;
+    text-transform: none; letter-spacing: 0;
+  }
+  .yes-no label:hover { border-color: var(--blue); }
+  .yes-no input[type="radio"] { accent-color: var(--blue); cursor: pointer; }
+  .yes-no input[type="radio"]:checked + span { color: var(--blue); }
+
+  /* CONDITIONAL PANELS */
+  .conditional-panel { display: none; margin-top: 1rem; padding: 1rem; background: var(--light); border-radius: var(--radius); border: 1px solid var(--border); }
+  .conditional-panel.show { display: block; }
+
+  /* NAVIGATION BUTTONS */
+  .form-nav {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: 2rem; gap: 1rem;
+  }
+  .btn-back {
+    display: flex; align-items: center; gap: 6px;
+    border: 1.5px solid var(--border); color: var(--mid);
+    background: var(--white); padding: 12px 22px;
+    border-radius: var(--radius); font-size: 14px; font-weight: 600;
+    font-family: 'DM Sans', sans-serif; cursor: pointer; transition: all 0.2s;
+  }
+  .btn-back:hover { border-color: var(--blue); color: var(--blue); }
+  .btn-next {
+    display: flex; align-items: center; gap: 6px;
+    background: var(--blue); color: var(--white);
+    border: none; padding: 12px 26px;
+    border-radius: var(--radius); font-size: 14px; font-weight: 600;
+    font-family: 'DM Sans', sans-serif; cursor: pointer; transition: background 0.2s;
+    margin-left: auto;
+  }
+  .btn-next:hover { background: var(--blue-dark); }
+  .btn-submit {
+    background: var(--orange); color: var(--white);
+    border: none; padding: 14px 32px;
+    border-radius: var(--radius); font-size: 15px; font-weight: 600;
+    font-family: 'DM Sans', sans-serif; cursor: pointer; transition: background 0.2s;
+    margin-left: auto;
+  }
+  .btn-submit:hover { background: #c9621a; }
+
+  /* REVIEW PANEL */
+  .review-section { margin-bottom: 1.25rem; }
+  .review-section h4 { font-size: 0.95rem; font-weight: 700; color: var(--mid); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.6rem; border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+  .review-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 0.5rem 1.5rem; }
+  .review-item strong { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--mid); }
+  .review-item span { font-size: 14px; }
+
+  /* CONSENT */
+  .consent-box {
+    display: flex; gap: 10px; padding: 1rem;
+    background: var(--light); border: 1.5px solid var(--border);
+    border-radius: var(--radius); align-items: flex-start;
+  }
+  .consent-box input[type="checkbox"] { accent-color: var(--blue); width: 16px; height: 16px; margin-top: 2px; flex-shrink: 0; cursor: pointer; }
+  .consent-box p { font-size: 13px; color: var(--mid); line-height: 1.5; }
+
+  /* SUCCESS */
+  .success-page { display: none; text-align: center; padding: 4rem 2rem; }
+  .success-page.active { display: block; }
+  .success-icon {
+    width: 72px; height: 72px; border-radius: 50%;
+    background: #eaf3de; margin: 0 auto 1.5rem;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .success-icon svg { width: 36px; height: 36px; stroke: #3B6D11; fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+  .success-page h2 { font-size: 2.2rem; font-weight: 800; margin-bottom: 0.75rem; }
+  .success-page p { color: var(--mid); max-width: 400px; margin: 0 auto 2rem; line-height: 1.6; }
+  .success-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .btn-home { background: var(--blue); color: var(--white); padding: 12px 24px; border-radius: var(--radius); text-decoration: none; font-size: 14px; font-weight: 600; transition: background 0.2s; }
+  .btn-home:hover { background: var(--blue-dark); }
+
+  /* FOOTER */
+  footer { background: var(--dark); color: rgba(255,255,255,0.6); padding: 2rem; text-align: center; font-size: 13px; }
+  footer strong { color: var(--white); }
+  footer a { color: var(--orange); text-decoration: none; }
+
+  /* INFO CALLOUT */
+  .info-callout {
+    display: flex; align-items: flex-start; gap: 10px;
+    background: rgba(27,95,170,0.05); border: 1px solid rgba(27,95,170,0.2);
+    border-radius: var(--radius); padding: 0.85rem 1rem;
+    margin-bottom: 1.5rem; font-size: 13px; color: var(--mid); line-height: 1.5;
+  }
+  .info-callout svg { width: 16px; height: 16px; stroke: var(--blue); fill: none; flex-shrink: 0; margin-top: 1px; }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <svg class="check-svg" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 20 L14 30 L32 8" stroke="#1B5FAA" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M13 20 L20 27 L32 8" stroke="#E87722" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.85"/>
+    </svg>
+    <div class="nav-brand">BOLD CPA LLC</div>
+  </a>
+  <div class="nav-links">
+    <a href="index.html#services">Services</a>
+    <a href="index.html#contact">Contact</a>
+    <a href="index.html#contact" class="nav-cta">Book Appointment</a>
+  </div>
+</nav>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <div class="badge">New Client Onboarding</div>
+  <h1>Client Intake Form</h1>
+  <p>Help us understand your situation so we can serve you better. Confidential &amp; takes about 5 minutes.</p>
+</div>
+
+<!-- PROGRESS BAR -->
+<div class="progress-bar-wrap">
+  <div class="progress-steps">
+    <div class="step-item active" id="step-ind-1">
+      <div class="step-dot">1</div>
+      <div class="step-label">Client Type</div>
+    </div>
+    <div class="step-item" id="step-ind-2">
+      <div class="step-dot">2</div>
+      <div class="step-label">Contact Info</div>
+    </div>
+    <div class="step-item" id="step-ind-3">
+      <div class="step-dot">3</div>
+      <div class="step-label">Details</div>
+    </div>
+    <div class="step-item" id="step-ind-4">
+      <div class="step-dot">4</div>
+      <div class="step-label">Services</div>
+    </div>
+    <div class="step-item" id="step-ind-5">
+      <div class="step-dot">5</div>
+      <div class="step-label">Review</div>
+    </div>
+  </div>
+</div>
+
+<!-- FORM WRAPPER -->
+<div class="form-wrapper">
+
+  <!-- ===================== PAGE 1: CLIENT TYPE ===================== -->
+  <div class="form-page active" id="page-1">
+    <div class="form-card">
+      <div class="section-heading">
+        <div class="section-number">1</div>
+        <div>
+          <span class="section-label-tag">Getting started</span>
+          <div class="section-title">Who are we helping?</div>
+        </div>
+      </div>
+
+      <div class="type-toggle">
+        <div class="type-option selected" id="opt-individual" onclick="selectClientType('individual')">
+          <input type="radio" name="client_type" value="individual" checked>
+          <div class="type-icon">👤</div>
+          <h4>Individual</h4>
+          <p>Personal tax returns, financial planning for individuals &amp; families</p>
+        </div>
+        <div class="type-option" id="opt-business" onclick="selectClientType('business')">
+          <input type="radio" name="client_type" value="business">
+          <div class="type-icon">🏢</div>
+          <h4>Business</h4>
+          <p>Business accounting, payroll, corporate tax, and bookkeeping</p>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>How did you hear about us?</label>
+        <select id="referral_source">
+          <option value="">Select one</option>
+          <option>Google Search</option>
+          <option>Referral from friend or family</option>
+          <option>Social Media (Facebook, Instagram)</option>
+          <option>LinkedIn</option>
+          <option>Yelp or Google Reviews</option>
+          <option>Community Event</option>
+          <option>Existing client referral</option>
+          <option>Other</option>
+        </select>
+      </div>
+
+      <div class="form-nav">
+        <button class="btn-next" onclick="goTo(2)">Next: Contact Info <span>→</span></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== PAGE 2: CONTACT INFO ===================== -->
+  <div class="form-page" id="page-2">
+    <div class="form-card">
+      <div class="section-heading">
+        <div class="section-number">2</div>
+        <div>
+          <span class="section-label-tag">Your information</span>
+          <div class="section-title">Contact Details</div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>First name <span class="required-star">*</span></label>
+          <input type="text" id="first_name" placeholder="Jane">
+          <div class="field-error" id="err-first_name">Please enter your first name.</div>
+        </div>
+        <div class="form-group">
+          <label>Last name <span class="required-star">*</span></label>
+          <input type="text" id="last_name" placeholder="Smith">
+          <div class="field-error" id="err-last_name">Please enter your last name.</div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Email address <span class="required-star">*</span></label>
+          <input type="email" id="email" placeholder="jane@example.com">
+          <div class="field-error" id="err-email">Please enter a valid email address.</div>
+        </div>
+        <div class="form-group">
+          <label>Phone number <span class="required-star">*</span></label>
+          <input type="tel" id="phone" placeholder="(561) 000-0000">
+          <div class="field-error" id="err-phone">Please enter your phone number.</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Street address</label>
+        <input type="text" id="address" placeholder="123 Main St">
+      </div>
+
+      <div class="form-row-3">
+        <div class="form-group">
+          <label>City</label>
+          <input type="text" id="city" placeholder="Greenacres">
+        </div>
+        <div class="form-group">
+          <label>State</label>
+          <select id="state">
+            <option value="">Select</option>
+            <option selected>FL</option>
+            <option>AL</option><option>AK</option><option>AZ</option><option>AR</option>
+            <option>CA</option><option>CO</option><option>CT</option><option>DE</option>
+            <option>GA</option><option>HI</option><option>ID</option><option>IL</option>
+            <option>IN</option><option>IA</option><option>KS</option><option>KY</option>
+            <option>LA</option><option>ME</option><option>MD</option><option>MA</option>
+            <option>MI</option><option>MN</option><option>MS</option><option>MO</option>
+            <option>MT</option><option>NE</option><option>NV</option><option>NH</option>
+            <option>NJ</option><option>NM</option><option>NY</option><option>NC</option>
+            <option>ND</option><option>OH</option><option>OK</option><option>OR</option>
+            <option>PA</option><option>RI</option><option>SC</option><option>SD</option>
+            <option>TN</option><option>TX</option><option>UT</option><option>VT</option>
+            <option>VA</option><option>WA</option><option>WV</option><option>WI</option>
+            <option>WY</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>ZIP code</label>
+          <input type="text" id="zip" placeholder="33463" maxlength="10">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Preferred contact method</label>
+        <div class="radio-group" id="contact_pref">
+          <label class="radio-item selected"><input type="radio" name="contact_pref" value="Email" checked onchange="updateRadioStyle('contact_pref')"> <span>Email</span></label>
+          <label class="radio-item"><input type="radio" name="contact_pref" value="Phone call" onchange="updateRadioStyle('contact_pref')"> <span>Phone call</span></label>
+          <label class="radio-item"><input type="radio" name="contact_pref" value="Text message" onchange="updateRadioStyle('contact_pref')"> <span>Text message</span></label>
+        </div>
+      </div>
+
+      <div class="form-nav">
+        <button class="btn-back" onclick="goTo(1)"><span>←</span> Back</button>
+        <button class="btn-next" onclick="goTo(3, ['first_name','last_name','email','phone'])">Next: Details <span>→</span></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== PAGE 3: CLIENT DETAILS ===================== -->
+  <div class="form-page" id="page-3">
+
+    <!-- INDIVIDUAL PANEL -->
+    <div id="individual-panel">
+      <div class="form-card">
+        <div class="section-heading">
+          <div class="section-number">3</div>
+          <div>
+            <span class="section-label-tag">Individual details</span>
+            <div class="section-title">Personal &amp; Tax Information</div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Date of birth</label>
+            <input type="date" id="dob">
+          </div>
+          <div class="form-group">
+            <label>Social Security (last 4 digits)</label>
+            <input type="text" id="ssn_last4" placeholder="••••" maxlength="4" pattern="\d{4}">
+            <div class="form-hint">Used only for identification purposes</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Filing status <span class="required-star">*</span></label>
+          <div class="radio-group" id="filing_status">
+            <label class="radio-item selected"><input type="radio" name="filing_status" value="Single" checked onchange="updateRadioStyle('filing_status')"> <span>Single</span></label>
+            <label class="radio-item"><input type="radio" name="filing_status" value="Married Filing Jointly" onchange="updateRadioStyle('filing_status')"> <span>Married Filing Jointly</span></label>
+            <label class="radio-item"><input type="radio" name="filing_status" value="Married Filing Separately" onchange="updateRadioStyle('filing_status')"> <span>Married Filing Separately</span></label>
+            <label class="radio-item"><input type="radio" name="filing_status" value="Head of Household" onchange="updateRadioStyle('filing_status')"> <span>Head of Household</span></label>
+          </div>
+        </div>
+
+        <div id="spouse-panel" class="conditional-panel">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Spouse first name</label>
+              <input type="text" id="spouse_first" placeholder="John">
+            </div>
+            <div class="form-group">
+              <label>Spouse last name</label>
+              <input type="text" id="spouse_last" placeholder="Smith">
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Spouse SSN (last 4 digits)</label>
+            <input type="text" id="spouse_ssn" placeholder="••••" maxlength="4">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Number of dependents</label>
+            <select id="num_dependents">
+              <option value="0">None</option>
+              <option>1</option><option>2</option><option>3</option>
+              <option>4</option><option>5+</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Tax years needed</label>
+            <select id="tax_years">
+              <option>2024 only</option>
+              <option>2023 only</option>
+              <option>2024 &amp; 2023</option>
+              <option>Multiple years (3+)</option>
+              <option>Not sure yet</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Primary income sources</label>
+          <div class="checkbox-grid" id="income_sources">
+            <label class="checkbox-item"><input type="checkbox" value="W-2 Employment" onchange="updateCheckStyle(this)"> <span>W-2 Employment</span></label>
+            <label class="checkbox-item"><input type="checkbox" value="Self-Employment / 1099" onchange="updateCheckStyle(this)"> <span>Self-Employment / 1099</span></label>
+            <label class="checkbox-item"><input type="checkbox" value="Rental Income" onchange="updateCheckStyle(this)"> <span>Rental Income</span></label>
+            <label class="checkbox-item"><input type="checkbox" value="Investments / Stocks" onchange="updateCheckStyle(this)"> <span>Investments / Stocks</span></label>
+            <label class="checkbox-item"><input type="checkbox" value="Social Security" onchange="updateCheckStyle(this)"> <span>Social Security</span></label>
+            <label class="checkbox-item"><input type="checkbox" value="Retirement / Pension" onchange="updateCheckStyle(this)"> <span>Retirement / Pension</span></label>
+            <label class="checkbox-item"><input type="checkbox" value="Foreign Income" onchange="updateCheckStyle(this)"> <span>Foreign Income</span></label>
+            <label class="checkbox-item"><input type="checkbox" value="Other" onchange="updateCheckStyle(this)"> <span>Other</span></label>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-card">
+        <div class="section-heading">
+          <div class="section-number" style="background:var(--orange);">!</div>
+          <div>
+            <span class="section-label-tag">Tax history</span>
+            <div class="section-title">A Few Quick Questions</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Did you have a prior CPA or accountant?</label>
+          <div class="yes-no">
+            <label><input type="radio" name="prior_cpa" value="Yes" onchange="togglePanel('prior-cpa-panel', 'Yes')"> <span>Yes</span></label>
+            <label><input type="radio" name="prior_cpa" value="No" checked onchange="togglePanel('prior-cpa-panel', 'No')"> <span>No</span></label>
+          </div>
+          <div class="conditional-panel" id="prior-cpa-panel">
+            <div class="form-group">
+              <label>Prior accountant / firm name</label>
+              <input type="text" id="prior_cpa_name" placeholder="Name or firm">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Do you have any unfiled tax returns?</label>
+          <div class="yes-no">
+            <label><input type="radio" name="unfiled" value="Yes" onchange="togglePanel('unfiled-panel', 'Yes')"> <span>Yes</span></label>
+            <label><input type="radio" name="unfiled" value="No" checked onchange="togglePanel('unfiled-panel', 'No')"> <span>No</span></label>
+          </div>
+          <div class="conditional-panel" id="unfiled-panel">
+            <div class="form-group">
+              <label>Which year(s)?</label>
+              <input type="text" id="unfiled_years" placeholder="e.g., 2021, 2022">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Are you currently under IRS audit or notice?</label>
+          <div class="yes-no">
+            <label><input type="radio" name="irs_audit" value="Yes" onchange="togglePanel('audit-panel', 'Yes')"> <span>Yes</span></label>
+            <label><input type="radio" name="irs_audit" value="No" checked onchange="togglePanel('audit-panel', 'No')"> <span>No</span></label>
+          </div>
+          <div class="conditional-panel" id="audit-panel">
+            <div class="form-group">
+              <label>Brief description of the notice or issue</label>
+              <textarea id="audit_desc" placeholder="Describe the notice or audit situation..."></textarea>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Do you own foreign accounts or assets?</label>
+          <div class="yes-no">
+            <label><input type="radio" name="foreign_assets" value="Yes"> <span>Yes</span></label>
+            <label><input type="radio" name="foreign_assets" value="No" checked> <span>No</span></label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BUSINESS PANEL -->
+    <div id="business-panel" style="display:none;">
+      <div class="form-card">
+        <div class="section-heading">
+          <div class="section-number">3</div>
+          <div>
+            <span class="section-label-tag">Business details</span>
+            <div class="section-title">About Your Business</div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Business name <span class="required-star">*</span></label>
+            <input type="text" id="biz_name" placeholder="Acme LLC">
+            <div class="field-error" id="err-biz_name">Please enter your business name.</div>
+          </div>
+          <div class="form-group">
+            <label>EIN (Employer ID Number)</label>
+            <input type="text" id="ein" placeholder="XX-XXXXXXX" maxlength="10">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Business entity type <span class="required-star">*</span></label>
+            <select id="entity_type">
+              <option value="">Select</option>
+              <option>Sole Proprietorship</option>
+              <option>Single-Member LLC</option>
+              <option>Multi-Member LLC</option>
+              <option>S-Corporation</option>
+              <option>C-Corporation</option>
+              <option>Partnership</option>
+              <option>Non-Profit</option>
+              <option>Not yet formed</option>
+            </select>
+            <div class="field-error" id="err-entity_type">Please select your entity type.</div>
+          </div>
+          <div class="form-group">
+            <label>Industry / Type of business</label>
+            <input type="text" id="industry" placeholder="e.g., Real estate, Retail, Consulting">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Year established</label>
+            <input type="number" id="biz_year" placeholder="2018" min="1900" max="2026">
+          </div>
+          <div class="form-group">
+            <label>Number of employees</label>
+            <select id="num_employees">
+              <option value="">Select</option>
+              <option>Just me (owner only)</option>
+              <option>2–5</option>
+              <option>6–15</option>
+              <option>16–50</option>
+              <option>51+</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Annual gross revenue (approximate)</label>
+          <select id="revenue">
+            <option value="">Prefer not to say</option>
+            <option>Under $50,000</option>
+            <option>$50,000 – $150,000</option>
+            <option>$150,000 – $500,000</option>
+            <option>$500,000 – $1 million</option>
+            <option>Over $1 million</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Current accounting software</label>
+          <div class="radio-group" id="acct_software">
+            <label class="radio-item"><input type="radio" name="acct_software" value="QuickBooks" onchange="updateRadioStyle('acct_software')"> <span>QuickBooks</span></label>
+            <label class="radio-item"><input type="radio" name="acct_software" value="Xero" onchange="updateRadioStyle('acct_software')"> <span>Xero</span></label>
+            <label class="radio-item"><input type="radio" name="acct_software" value="Wave" onchange="updateRadioStyle('acct_software')"> <span>Wave</span></label>
+            <label class="radio-item"><input type="radio" name="acct_software" value="Spreadsheets" onchange="updateRadioStyle('acct_software')"> <span>Spreadsheets</span></label>
+            <label class="radio-item"><input type="radio" name="acct_software" value="None" onchange="updateRadioStyle('acct_software')"> <span>None</span></label>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-card">
+        <div class="section-heading">
+          <div class="section-number" style="background:var(--orange);">!</div>
+          <div>
+            <span class="section-label-tag">Tax &amp; compliance history</span>
+            <div class="section-title">A Few Quick Questions</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Tax years needed</label>
+          <select id="biz_tax_years">
+            <option>2024 only</option>
+            <option>2024 &amp; 2023</option>
+            <option>Multiple years (3+)</option>
+            <option>Not sure yet</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Did you have a prior CPA or accountant?</label>
+          <div class="yes-no">
+            <label><input type="radio" name="biz_prior_cpa" value="Yes" onchange="togglePanel('biz-prior-cpa-panel', 'Yes')"> <span>Yes</span></label>
+            <label><input type="radio" name="biz_prior_cpa" value="No" checked onchange="togglePanel('biz-prior-cpa-panel', 'No')"> <span>No</span></label>
+          </div>
+          <div class="conditional-panel" id="biz-prior-cpa-panel">
+            <div class="form-group">
+              <label>Prior accountant / firm name</label>
+              <input type="text" id="biz_prior_cpa_name" placeholder="Name or firm">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Are there any unfiled returns or outstanding tax issues?</label>
+          <div class="yes-no">
+            <label><input type="radio" name="biz_unfiled" value="Yes" onchange="togglePanel('biz-unfiled-panel', 'Yes')"> <span>Yes</span></label>
+            <label><input type="radio" name="biz_unfiled" value="No" checked onchange="togglePanel('biz-unfiled-panel', 'No')"> <span>No</span></label>
+          </div>
+          <div class="conditional-panel" id="biz-unfiled-panel">
+            <div class="form-group">
+              <label>Please describe</label>
+              <textarea id="biz_unfiled_desc" placeholder="Describe the situation..."></textarea>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Does the business handle payroll?</label>
+          <div class="yes-no">
+            <label><input type="radio" name="biz_payroll" value="Yes"> <span>Yes</span></label>
+            <label><input type="radio" name="biz_payroll" value="No" checked> <span>No</span></label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-nav">
+      <button class="btn-back" onclick="goTo(2)"><span>←</span> Back</button>
+      <button class="btn-next" onclick="goToDetails4()">Next: Services <span>→</span></button>
+    </div>
+  </div>
+
+  <!-- ===================== PAGE 4: SERVICES ===================== -->
+  <div class="form-page" id="page-4">
+    <div class="form-card">
+      <div class="section-heading">
+        <div class="section-number">4</div>
+        <div>
+          <span class="section-label-tag">What you need</span>
+          <div class="section-title">Services Requested</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Select all that apply <span class="required-star">*</span></label>
+        <div class="checkbox-grid" id="services_requested">
+          <label class="checkbox-item"><input type="checkbox" value="Tax Preparation" onchange="updateCheckStyle(this)"> <span>Tax Preparation</span></label>
+          <label class="checkbox-item"><input type="checkbox" value="Tax Planning" onchange="updateCheckStyle(this)"> <span>Tax Planning</span></label>
+          <label class="checkbox-item"><input type="checkbox" value="Business Accounting" onchange="updateCheckStyle(this)"> <span>Business Accounting</span></label>
+          <label class="checkbox-item"><input type="checkbox" value="Bookkeeping" onchange="updateCheckStyle(this)"> <span>Bookkeeping</span></label>
+          <label class="checkbox-item"><input type="checkbox" value="Payroll" onchange="updateCheckStyle(this)"> <span>Payroll</span></label>
+          <label class="checkbox-item"><input type="checkbox" value="Financial Advisory" onchange="updateCheckStyle(this)"> <span>Financial Advisory</span></label>
+          <label class="checkbox-item"><input type="checkbox" value="IRS Representation" onchange="updateCheckStyle(this)"> <span>IRS Representation</span></label>
+          <label class="checkbox-item"><input type="checkbox" value="Business Formation" onchange="updateCheckStyle(this)"> <span>Business Formation</span></label>
+          <label class="checkbox-item"><input type="checkbox" value="Not Sure / Consultation" onchange="updateCheckStyle(this)"> <span>Not Sure / Consultation</span></label>
+        </div>
+        <div class="field-error" id="err-services">Please select at least one service.</div>
+      </div>
+
+      <div class="form-group" style="margin-top:1.5rem;">
+        <label>Urgency / timeline</label>
+        <div class="radio-group" id="urgency">
+          <label class="radio-item selected"><input type="radio" name="urgency" value="No rush" checked onchange="updateRadioStyle('urgency')"> <span>No rush</span></label>
+          <label class="radio-item"><input type="radio" name="urgency" value="Within 1 month" onchange="updateRadioStyle('urgency')"> <span>Within 1 month</span></label>
+          <label class="radio-item"><input type="radio" name="urgency" value="Within 2 weeks" onchange="updateRadioStyle('urgency')"> <span>Within 2 weeks</span></label>
+          <label class="radio-item"><input type="radio" name="urgency" value="ASAP" onchange="updateRadioStyle('urgency')"> <span>ASAP</span></label>
+        </div>
+      </div>
+
+      <div class="form-group" style="margin-top:1.5rem;">
+        <label>Preferred appointment date</label>
+        <input type="date" id="appt_date">
+      </div>
+
+      <div class="form-group">
+        <label>Preferred appointment time</label>
+        <select id="appt_time">
+          <option value="">No preference</option>
+          <option>Morning (9am – 12pm)</option>
+          <option>Afternoon (12pm – 3pm)</option>
+          <option>Late afternoon (3pm – 5pm)</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Additional notes or questions</label>
+        <textarea id="notes" placeholder="Share anything else about your situation, goals, or questions you have for us..."></textarea>
+      </div>
+    </div>
+
+    <div class="form-nav">
+      <button class="btn-back" onclick="goTo(3)"><span>←</span> Back</button>
+      <button class="btn-next" onclick="goToReview()">Review &amp; Submit <span>→</span></button>
+    </div>
+  </div>
+
+  <!-- ===================== PAGE 5: REVIEW ===================== -->
+  <div class="form-page" id="page-5">
+    <div class="form-card">
+      <div class="section-heading">
+        <div class="section-number">5</div>
+        <div>
+          <span class="section-label-tag">Almost done</span>
+          <div class="section-title">Review Your Information</div>
+        </div>
+      </div>
+
+      <div class="info-callout">
+        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+        Please review your information before submitting. You can go back to make changes.
+      </div>
+
+      <div id="review-content"></div>
+
+      <div class="form-group" style="margin-top:1.5rem;">
+        <label style="margin-bottom:0.75rem;">Authorization &amp; Consent</label>
+        <div class="consent-box">
+          <input type="checkbox" id="consent">
+          <p>By submitting this form, I authorize <strong>BOLD CPA LLC</strong> to contact me regarding accounting and tax services. I confirm that the information provided is accurate to the best of my knowledge. I understand this is a secure intake form and my information will be kept strictly confidential.</p>
+        </div>
+        <div class="field-error" id="err-consent">You must agree to the authorization before submitting.</div>
+      </div>
+    </div>
+
+    <div class="form-nav">
+      <button class="btn-back" onclick="goTo(4)"><span>←</span> Back</button>
+      <button class="btn-submit" onclick="handleSubmit()">Submit Intake Form</button>
+    </div>
+  </div>
+
+  <!-- ===================== SUCCESS ===================== -->
+  <div class="success-page" id="success-page">
+    <div class="success-icon">
+      <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+    </div>
+    <h2>You're All Set!</h2>
+    <p>Thank you for completing your intake form. Our team will review your information and reach out within <strong>1 business day</strong> to confirm your appointment.</p>
+    <div class="success-actions">
+      <a href="index.html" class="btn-home">Back to Home</a>
+    </div>
+    <p style="margin-top:2rem; font-size:13px; color:var(--mid);">Questions? Email us at <a href="mailto:info@myboldcpa.com" style="color:var(--blue);">info@myboldcpa.com</a> or call <a href="tel:5615550100" style="color:var(--blue);">(561) 555-0100</a>.</p>
+  </div>
+
+</div><!-- /form-wrapper -->
+
+<!-- FOOTER -->
+<footer>
+  <p><strong>BOLD CPA LLC</strong> &nbsp;·&nbsp; Greenacres, Florida &nbsp;·&nbsp; <a href="mailto:info@myboldcpa.com">info@myboldcpa.com</a></p>
+  <p style="margin-top:0.5rem;">© 2026 BOLD CPA LLC. All rights reserved.</p>
+</footer>
+
+<script>
+// ── State ────────────────────────────────────────────────────────────────────
+let clientType = 'individual';
+let currentPage = 1;
+
+// ── Client Type Selection ────────────────────────────────────────────────────
+function selectClientType(type) {
+  clientType = type;
+  document.querySelectorAll('.type-option').forEach(el => el.classList.remove('selected'));
+  document.getElementById('opt-' + type).classList.add('selected');
+  document.querySelector(`input[value="${type}"]`).checked = true;
+}
+
+// ── Page Navigation ──────────────────────────────────────────────────────────
+function goTo(page, requiredFields) {
+  if (requiredFields && !validateFields(requiredFields)) return;
+  currentPage = page;
+  document.querySelectorAll('.form-page').forEach(p => p.classList.remove('active'));
+  const target = document.getElementById('page-' + page);
+  if (target) target.classList.add('active');
+  updateProgress(page);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function goToDetails4() {
+  if (clientType === 'business') {
+    const bizRequired = ['biz_name', 'entity_type'];
+    if (!validateFields(bizRequired)) return;
+  }
+  goTo(4);
+}
+
+function goToReview() {
+  const serviceBoxes = document.querySelectorAll('#services_requested input[type="checkbox"]:checked');
+  if (serviceBoxes.length === 0) {
+    document.getElementById('err-services').classList.add('show');
+    return;
+  }
+  document.getElementById('err-services').classList.remove('show');
+  buildReview();
+  goTo(5);
+}
+
+// ── Progress Indicator ───────────────────────────────────────────────────────
+function updateProgress(page) {
+  for (let i = 1; i <= 5; i++) {
+    const el = document.getElementById('step-ind-' + i);
+    el.classList.remove('active', 'done');
+    if (i < page) el.classList.add('done');
+    else if (i === page) el.classList.add('active');
+    // Show checkmark for done steps
+    const dot = el.querySelector('.step-dot');
+    if (i < page) dot.innerHTML = '✓';
+    else dot.innerHTML = i;
+  }
+}
+
+// ── Validation ───────────────────────────────────────────────────────────────
+function validateFields(ids) {
+  let valid = true;
+  ids.forEach(id => {
+    const el = document.getElementById(id);
+    const err = document.getElementById('err-' + id);
+    if (!el) return;
+    const val = el.value.trim();
+    let fieldOk = val !== '';
+    if (el.type === 'email') fieldOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
+    if (fieldOk) {
+      el.classList.remove('error');
+      if (err) err.classList.remove('show');
+    } else {
+      el.classList.add('error');
+      if (err) err.classList.add('show');
+      valid = false;
+    }
+  });
+  return valid;
+}
+
+// ── Radio / Checkbox Styles ──────────────────────────────────────────────────
+function updateRadioStyle(groupId) {
+  const container = document.getElementById(groupId);
+  if (!container) return;
+  container.querySelectorAll('.radio-item').forEach(item => {
+    item.classList.toggle('selected', item.querySelector('input').checked);
+  });
+}
+
+function updateCheckStyle(input) {
+  input.closest('.checkbox-item').classList.toggle('checked', input.checked);
+}
+
+// ── Conditional Panels ───────────────────────────────────────────────────────
+function togglePanel(panelId, value) {
+  const panel = document.getElementById(panelId);
+  if (!panel) return;
+  panel.classList.toggle('show', value === 'Yes');
+}
+
+// Show/hide individual vs. business panels on page 3
+document.addEventListener('DOMContentLoaded', () => {
+  // Filing status → show spouse panel
+  document.querySelectorAll('input[name="filing_status"]').forEach(radio => {
+    radio.addEventListener('change', () => {
+      const showSpouse = radio.value.startsWith('Married');
+      document.getElementById('spouse-panel').classList.toggle('show', showSpouse && radio.checked);
+    });
+  });
+  // Set min date for appointment picker to today
+  const today = new Date().toISOString().split('T')[0];
+  const apptDateEl = document.getElementById('appt_date');
+  if (apptDateEl) apptDateEl.min = today;
+});
+
+function showClientPanels() {
+  document.getElementById('individual-panel').style.display = clientType === 'individual' ? 'block' : 'none';
+  document.getElementById('business-panel').style.display = clientType === 'business' ? 'block' : 'none';
+}
+
+// Override goTo 3 to show right panel
+const _origGoTo = goTo;
+function goTo(page, requiredFields) {
+  if (requiredFields && !validateFields(requiredFields)) return;
+  if (page === 3) showClientPanels();
+  currentPage = page;
+  document.querySelectorAll('.form-page').forEach(p => p.classList.remove('active'));
+  const target = document.getElementById('page-' + page);
+  if (target) target.classList.add('active');
+  updateProgress(page);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ── Build Review Panel ───────────────────────────────────────────────────────
+function buildReview() {
+  const v = id => (document.getElementById(id) || {}).value || '—';
+  const checkedVals = selector => {
+    const els = document.querySelectorAll(selector + ':checked');
+    return els.length ? Array.from(els).map(e => e.value).join(', ') : '—';
+  };
+  const radioVal = name => {
+    const el = document.querySelector(`input[name="${name}"]:checked`);
+    return el ? el.value : '—';
+  };
+
+  let html = '';
+
+  // Contact
+  html += `<div class="review-section">
+    <h4>Contact Information</h4>
+    <div class="review-grid">
+      <div class="review-item"><strong>Name</strong><span>${v('first_name')} ${v('last_name')}</span></div>
+      <div class="review-item"><strong>Email</strong><span>${v('email')}</span></div>
+      <div class="review-item"><strong>Phone</strong><span>${v('phone')}</span></div>
+      <div class="review-item"><strong>Client Type</strong><span>${clientType === 'individual' ? 'Individual' : 'Business'}</span></div>
+      <div class="review-item"><strong>Preferred Contact</strong><span>${radioVal('contact_pref')}</span></div>
+      ${v('city') !== '—' ? `<div class="review-item"><strong>Location</strong><span>${v('city')}, ${v('state')} ${v('zip')}</span></div>` : ''}
+    </div>
+  </div>`;
+
+  if (clientType === 'individual') {
+    html += `<div class="review-section">
+      <h4>Tax Details</h4>
+      <div class="review-grid">
+        <div class="review-item"><strong>Filing Status</strong><span>${radioVal('filing_status')}</span></div>
+        <div class="review-item"><strong>Dependents</strong><span>${v('num_dependents')}</span></div>
+        <div class="review-item"><strong>Tax Years</strong><span>${v('tax_years')}</span></div>
+        <div class="review-item"><strong>Income Sources</strong><span>${checkedVals('#income_sources input[type="checkbox"]')}</span></div>
+        <div class="review-item"><strong>Prior CPA</strong><span>${radioVal('prior_cpa')}</span></div>
+        <div class="review-item"><strong>Unfiled Returns</strong><span>${radioVal('unfiled')}</span></div>
+        <div class="review-item"><strong>IRS Audit/Notice</strong><span>${radioVal('irs_audit')}</span></div>
+      </div>
+    </div>`;
+  } else {
+    html += `<div class="review-section">
+      <h4>Business Details</h4>
+      <div class="review-grid">
+        <div class="review-item"><strong>Business Name</strong><span>${v('biz_name')}</span></div>
+        <div class="review-item"><strong>Entity Type</strong><span>${v('entity_type')}</span></div>
+        <div class="review-item"><strong>Industry</strong><span>${v('industry')}</span></div>
+        <div class="review-item"><strong>Year Est.</strong><span>${v('biz_year')}</span></div>
+        <div class="review-item"><strong>Employees</strong><span>${v('num_employees')}</span></div>
+        <div class="review-item"><strong>Revenue</strong><span>${v('revenue')}</span></div>
+        <div class="review-item"><strong>Accounting Software</strong><span>${radioVal('acct_software')}</span></div>
+      </div>
+    </div>`;
+  }
+
+  html += `<div class="review-section">
+    <h4>Services &amp; Scheduling</h4>
+    <div class="review-grid">
+      <div class="review-item"><strong>Services Needed</strong><span>${checkedVals('#services_requested input[type="checkbox"]')}</span></div>
+      <div class="review-item"><strong>Urgency</strong><span>${radioVal('urgency')}</span></div>
+      ${v('appt_date') !== '—' ? `<div class="review-item"><strong>Preferred Date</strong><span>${v('appt_date')}</span></div>` : ''}
+      ${v('appt_time') !== '—' ? `<div class="review-item"><strong>Preferred Time</strong><span>${v('appt_time')}</span></div>` : ''}
+      ${v('referral_source') !== '—' ? `<div class="review-item"><strong>How You Found Us</strong><span>${v('referral_source')}</span></div>` : ''}
+    </div>
+    ${v('notes') !== '—' ? `<div style="margin-top:0.75rem;"><strong style="font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--mid);">Notes</strong><p style="font-size:14px;margin-top:3px;">${v('notes')}</p></div>` : ''}
+  </div>`;
+
+  document.getElementById('review-content').innerHTML = html;
+}
+
+// ── Final Submit ─────────────────────────────────────────────────────────────
+function handleSubmit() {
+  const consent = document.getElementById('consent');
+  if (!consent.checked) {
+    document.getElementById('err-consent').classList.add('show');
+    return;
+  }
+  document.getElementById('err-consent').classList.remove('show');
+
+  const btn = document.querySelector('.btn-submit');
+  btn.textContent = 'Submitting...';
+  btn.disabled = true;
+
+  setTimeout(() => {
+    document.querySelectorAll('.form-page').forEach(p => p.classList.remove('active'));
+    document.getElementById('success-page').classList.add('active');
+    document.querySelector('.progress-bar-wrap').style.display = 'none';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, 1400);
+}
+</script>
+</body>
+</html>
